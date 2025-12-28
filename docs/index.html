@@ -5,45 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Squash Replays</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
+            margin: 0;
             padding: 20px;
-            background: #1a1a1a;
+            background: #0d0d0d;
             color: #fff;
         }
-        h1 { color: #ff6b00; }
+        h1 {
+            color: #ff6b00;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .matches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
         .match {
-            background: #2a2a2a;
+            background: #1a1a1a;
             border-radius: 8px;
-            padding: 16px;
-            margin: 16px 0;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .match:hover {
+            transform: scale(1.02);
         }
         .match a {
-            color: #4da6ff;
             text-decoration: none;
-            font-size: 1.2em;
-            font-weight: bold;
+            color: inherit;
         }
-        .match a:hover { text-decoration: underline; }
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+        .info {
+            padding: 12px;
+        }
+        .title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.95em;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
         .meta {
             color: #888;
-            margin-top: 8px;
-            font-size: 0.9em;
+            font-size: 0.8em;
+        }
+        .duration {
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
+        .thumb-container {
+            position: relative;
         }
     </style>
 </head>
 <body>
-    <h1>Squash Replays</h1>
+<h1>Squash Replays</h1>
+<div class="matches" id="matches"></div>
 
-    <div class="match">
-        <a href="https://www.dailymotion.com/video/k6FG11TFW9NaUVArVVa" target="_blank">
-            Replay - Black Ball Squash Open 2024 - Rd1 - Curtis Malik v Omar Mosaad
-        </a>
-        <div class="meta">
-            Black Ball Squash Open 2024 &bull; 11 April 2024
-        </div>
-    </div>
+<script>
+    const matches = [
+        {
+            url: "https://www.dailymotion.com/video/k6FG11TFW9NaUVArVVa",
+            title: "Replay - Black Ball Squash Open 2024 - Rd1 - Curtis Malik v Omar Mosaad",
+            date: "2024-04-11",
+            duration: "1:37"
+        },
+        {
+            url: "https://www.dailymotion.com/video/kda11YIkvnURTaArNP0",
+            title: "Replay - Black Ball Squash Open 2024 - Rd1 - Leandro Romiglio v Fares Dessouky",
+            date: "2024-04-11",
+            duration: "1:11"
+        },
+        {
+            url: "https://www.dailymotion.com/video/k4wtJjw3W6cQqgArLGs",
+            title: "Replay - Black Ball Squash Open 2024 - Rd1 - Raphael Kandra v Youssef Ibrahim",
+            date: "2024-04-11",
+            duration: "0:48"
+        }
+    ];
+
+    function getVideoId(url) {
+        return url.split('/video/')[1];
+    }
+
+    function getThumbnail(url) {
+        const videoId = getVideoId(url);
+        return `https://www.dailymotion.com/thumbnail/video/${videoId}`;
+    }
+
+    function renderMatches() {
+        const container = document.getElementById('matches');
+        container.innerHTML = matches.map(match => `
+            <div class="match">
+                <a href="${match.url}" target="_blank" rel="noopener">
+                    <div class="thumb-container">
+                        <img class="thumbnail" src="${getThumbnail(match.url)}" alt="${match.title}">
+                        <span class="duration">${match.duration}</span>
+                    </div>
+                    <div class="info">
+                        <div class="title">${match.title}</div>
+                        <div class="meta">${match.date}</div>
+                    </div>
+                </a>
+            </div>
+        `).join('');
+    }
+
+    renderMatches();
+</script>
 </body>
 </html>
