@@ -43,7 +43,8 @@
             overflow: hidden;
             transition: transform 0.2s;
         }
-        .match:hover { transform: scale(1.02); }
+        .match:hover,
+        .round.revealed .match:hover { transform: scale(1.02); }
         .match a {
             text-decoration: none;
             color: inherit;
@@ -77,24 +78,27 @@
             right: 8px;
         }
         .thumb-container { position: relative; }
-
-        /* Spoiler prevention: blur effect */
-        .round {
-            transition: filter 0.5s ease-out, opacity 0.5s ease-out;
+        .match.upset .thumb-container {
+            border: 3px solid #ff6b00;
+            border-radius: 8px;
         }
-        .round.blurred {
+
+        /* Spoiler prevention: blur effect (on children for Firefox compat) */
+        .round.blurred h2,
+        .round.blurred .match {
             filter: blur(12px);
             opacity: 0.6;
-        }
-        .round.blurred .match {
+            transform: scale(0.98) translateY(100px);
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
             pointer-events: none;
         }
-        .round.revealed {
+        .round.revealed h2,
+        .round.revealed .match {
             filter: none;
             opacity: 1;
-        }
-        .round.revealed .match {
+            transform: scale(1) translateY(0);
             pointer-events: auto;
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
         }
     </style>
 </head>
@@ -106,28 +110,28 @@
 
 <script>
     const matches = [
-        { "id": "k4CTkVhdT9Z4kizS7me", "title": "Round 2 – Youssef Soliman v Victor Crouin", "round": "ROUND2", "date": "2024-01-19", "duration": "1:30" },
-        { "id": "kRKAb7dEY9laCIzSeVe", "title": "Round 2 – Fares Dessouky v Miguel Rodriguez", "round": "ROUND2", "date": "2024-01-19", "duration": "1:15" },
-        { "id": "k3Ujffc1KL4F3EzSidD", "title": "Round 2 – Mostafa Asal v Patrick Rooney", "round": "ROUND2", "date": "2024-01-19", "duration": "1:05" },
-        { "id": "k20ONtni8qcluKzSmsI", "title": "Round 2 – Youssef Ibrahim v Nick Wall", "round": "ROUND2", "date": "2024-01-20", "duration": "1:04" },
-        { "id": "k2U8p0lfTVC0x9zSgBW", "title": "Round 2 – Andrew Douglas v Diego Elias", "round": "ROUND2", "date": "2024-01-19", "duration": "0:54" },
-        { "id": "k5GD6S8fnd4eiDzS710", "title": "Round 2 – Eain Yow Ng v Paul Coll", "round": "ROUND2", "date": "2024-01-19", "duration": "0:50" },
-        { "id": "k4k3KN9P1sG74TzSjod", "title": "Round 2 – Cesar Salazar v Mohamed Elshorbagy", "round": "ROUND2", "date": "2024-01-20", "duration": "0:48" },
-        { "id": "k4trhZpTqw85CRzS5Qi", "title": "Round 2 – Ali Farag v Omar Mosaad", "round": "ROUND2", "date": "2024-01-18", "duration": "0:43" },
-        { "id": "k3XNGuK4hrTEqLzS2kJ", "title": "Round 2 – Faraz Khan v Tarek Momen", "round": "ROUND2", "date": "2024-01-18", "duration": "0:42" },
-        { "id": "k1gOS5x8kj78tWzSyQS", "title": "Round 3 – Marwan Elshorbagy v Victor Crouin", "round": "ROUND3", "date": "2024-01-21", "duration": "1:25" },
-        { "id": "k5t5wT5IjaGiZrzSpYQ", "title": "Round 3 – Iker Pajares v Tarek Momen", "round": "ROUND3", "date": "2024-01-20", "duration": "1:17" },
-        { "id": "k2bOOMKbDYkBPDzSEjD", "title": "Round 3 – Youssef Ibrahim v Diego Elias", "round": "ROUND3", "date": "2024-01-21", "duration": "1:10" },
-        { "id": "k5HyPhdYtmmyv8zSEMy", "title": "Round 3 – Mostafa Asal v Mohamed Abouelghar", "round": "ROUND3", "date": "2024-01-21", "duration": "0:58" },
-        { "id": "k4dZ9geTccboQLzSCNO", "title": "Round 3 – Mazen Hesham v Fares Dessouky", "round": "ROUND3", "date": "2024-01-21", "duration": "0:58" },
-        { "id": "k7MwyCoWPCrGCozSro7", "title": "Round 3 – Ali Farag v Baptiste Masotti", "round": "ROUND3", "date": "2024-01-20", "duration": "0:54" },
-        { "id": "k23wmOVOzyXRcozSFbk", "title": "Round 3 – Nathan Lake v Mohamed Elshorbagy", "round": "ROUND3", "date": "2024-01-22", "duration": "0:50" },
-        { "id": "k7yVoF3fJsRJt9zSsIR", "title": "Round 3 – Yahya Elnawasany v Paul Coll", "round": "ROUND3", "date": "2024-01-20", "duration": "0:48" },
-        { "id": "k53ct9tqveoXMGzSVHb", "title": "Quarter Final – Victor Crouin v Paul Coll", "round": "QUARTER_FINAL", "date": "2024-01-23", "duration": "1:21" },
-        { "id": "k1otjPifshxUJxzSVx2", "title": "Quarter Final – Ali Farag v Tarek Momen", "round": "QUARTER_FINAL", "date": "2024-01-23", "duration": "1:15" },
-        { "id": "k1MQx6PQ6lS2FfzTnNP", "title": "Semi Final – Mostafa Asal v Diego Elias", "round": "SEMI_FINAL", "date": "2024-01-25", "duration": "1:44" },
-        { "id": "k1X93jqxtK1kY2zTn4z", "title": "Semi Final – Ali Farag v Victor Crouin", "round": "SEMI_FINAL", "date": "2024-01-25", "duration": "1:07" },
-        { "id": "k3KfHa4mNcXjyvzTA7N", "title": "Final – Ali Farag v Diego Elias", "round": "FINAL", "date": "2024-01-26", "duration": "1:44" }
+        { "id": "k4CTkVhdT9Z4kizS7me", "title": "Round 2 – Youssef Soliman v Victor Crouin", "round": "ROUND2", "date": "2024-01-19", "duration": "1:30", "upset": false },
+        { "id": "kRKAb7dEY9laCIzSeVe", "title": "Round 2 – Fares Dessouky v Miguel Rodriguez", "round": "ROUND2", "date": "2024-01-19", "duration": "1:15", "upset": false },
+        { "id": "k3Ujffc1KL4F3EzSidD", "title": "Round 2 – Mostafa Asal v Patrick Rooney", "round": "ROUND2", "date": "2024-01-19", "duration": "1:05", "upset": false },
+        { "id": "k20ONtni8qcluKzSmsI", "title": "Round 2 – Youssef Ibrahim v Nick Wall", "round": "ROUND2", "date": "2024-01-20", "duration": "1:04", "upset": false },
+        { "id": "k2U8p0lfTVC0x9zSgBW", "title": "Round 2 – Andrew Douglas v Diego Elias", "round": "ROUND2", "date": "2024-01-19", "duration": "0:54", "upset": false },
+        { "id": "k5GD6S8fnd4eiDzS710", "title": "Round 2 – Eain Yow Ng v Paul Coll", "round": "ROUND2", "date": "2024-01-19", "duration": "0:50", "upset": false },
+        { "id": "k4k3KN9P1sG74TzSjod", "title": "Round 2 – Cesar Salazar v Mohamed Elshorbagy", "round": "ROUND2", "date": "2024-01-20", "duration": "0:48", "upset": false },
+        { "id": "k4trhZpTqw85CRzS5Qi", "title": "Round 2 – Ali Farag v Omar Mosaad", "round": "ROUND2", "date": "2024-01-18", "duration": "0:43", "upset": false },
+        { "id": "k3XNGuK4hrTEqLzS2kJ", "title": "Round 2 – Faraz Khan v Tarek Momen", "round": "ROUND2", "date": "2024-01-18", "duration": "0:42", "upset": false },
+        { "id": "k1gOS5x8kj78tWzSyQS", "title": "Round 3 – Marwan Elshorbagy v Victor Crouin", "round": "ROUND3", "date": "2024-01-21", "duration": "1:25", "upset": true },
+        { "id": "k4dZ9geTccboQLzSCNO", "title": "Round 3 – Mazen Hesham v Fares Dessouky", "round": "ROUND3", "date": "2024-01-21", "duration": "0:58", "upset": true },
+        { "id": "k5t5wT5IjaGiZrzSpYQ", "title": "Round 3 – Iker Pajares v Tarek Momen", "round": "ROUND3", "date": "2024-01-20", "duration": "1:17", "upset": false },
+        { "id": "k2bOOMKbDYkBPDzSEjD", "title": "Round 3 – Youssef Ibrahim v Diego Elias", "round": "ROUND3", "date": "2024-01-21", "duration": "1:10", "upset": false },
+        { "id": "k5HyPhdYtmmyv8zSEMy", "title": "Round 3 – Mostafa Asal v Mohamed Abouelghar", "round": "ROUND3", "date": "2024-01-21", "duration": "0:58", "upset": false },
+        { "id": "k7MwyCoWPCrGCozSro7", "title": "Round 3 – Ali Farag v Baptiste Masotti", "round": "ROUND3", "date": "2024-01-20", "duration": "0:54", "upset": false },
+        { "id": "k23wmOVOzyXRcozSFbk", "title": "Round 3 – Nathan Lake v Mohamed Elshorbagy", "round": "ROUND3", "date": "2024-01-22", "duration": "0:50", "upset": false },
+        { "id": "k7yVoF3fJsRJt9zSsIR", "title": "Round 3 – Yahya Elnawasany v Paul Coll", "round": "ROUND3", "date": "2024-01-20", "duration": "0:48", "upset": false },
+        { "id": "k53ct9tqveoXMGzSVHb", "title": "Quarter Final – Victor Crouin v Paul Coll", "round": "QUARTER_FINAL", "date": "2024-01-23", "duration": "1:21", "upset": true },
+        { "id": "k1otjPifshxUJxzSVx2", "title": "Quarter Final – Ali Farag v Tarek Momen", "round": "QUARTER_FINAL", "date": "2024-01-23", "duration": "1:15", "upset": false },
+        { "id": "k1MQx6PQ6lS2FfzTnNP", "title": "Semi Final – Mostafa Asal v Diego Elias", "round": "SEMI_FINAL", "date": "2024-01-25", "duration": "1:44", "upset": true },
+        { "id": "k1X93jqxtK1kY2zTn4z", "title": "Semi Final – Ali Farag v Victor Crouin", "round": "SEMI_FINAL", "date": "2024-01-25", "duration": "1:07", "upset": false },
+        { "id": "k3KfHa4mNcXjyvzTA7N", "title": "Final – Ali Farag v Diego Elias", "round": "FINAL", "date": "2024-01-26", "duration": "1:44", "upset": false }
     ];
 
     const ROUND_ORDER = ['ROUND1', 'ROUND2', 'ROUND3', 'QUARTER_FINAL', 'SEMI_FINAL', 'FINAL'];
@@ -146,9 +150,11 @@
             if (!groups[m.round]) groups[m.round] = [];
             groups[m.round].push(m);
         });
-        // Sort each group by duration descending
+        // Sort each group by upset (true first), then duration descending
         Object.values(groups).forEach(arr =>
-            arr.sort((a, b) => parseDuration(b.duration) - parseDuration(a.duration))
+            arr.sort((a, b) =>
+                (b.upset - a.upset) || (parseDuration(b.duration) - parseDuration(a.duration))
+            )
         );
         return groups;
     }
@@ -161,8 +167,9 @@
     function renderCard(match) {
         const url = 'https://www.dailymotion.com/video/' + match.id;
         const thumb = 'https://www.dailymotion.com/thumbnail/video/' + match.id;
+        const upsetClass = match.upset ? ' upset' : '';
         return `
-            <div class="match">
+            <div class="match${upsetClass}">
                 <a href="${url}" target="_blank" rel="noopener">
                     <div class="thumb-container">
                         <img class="thumbnail" src="${thumb}" alt="${match.title}" loading="lazy">
@@ -204,12 +211,12 @@
         // Setup IntersectionObserver for blur reveal
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+                if (entry.isIntersecting) {
                     entry.target.classList.remove('blurred');
                     entry.target.classList.add('revealed');
                 }
             });
-        }, { threshold: [0.3], rootMargin: '0px 0px -10% 0px' });
+        }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
 
         document.querySelectorAll('.round.blurred').forEach(s => observer.observe(s));
     }
