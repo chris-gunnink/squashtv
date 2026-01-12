@@ -1,3 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Gouna International 2024 - Spoiler-Free</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #0d0d0d;
+            color: #fff;
+        }
+        h1 {
+            color: #ff6b00;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 24px;
+        }
+        h2 {
+            color: #ff6b00;
+            font-size: 1.2em;
+            margin: 24px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        .matches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .match {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .match:hover,
+        .round.revealed .match:hover { transform: scale(1.02); }
+        .match a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+        .info { padding: 12px; }
+        .title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #888;
+            font-size: 0.75em;
+        }
+        .duration {
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
+        .thumb-container { position: relative; }
+        .match.upset .thumb-container {
+            border: 3px solid #ff6b00;
+            border-radius: 8px;
+        }
+
+        /* Spoiler prevention: blur effect (on children for Firefox compat) */
+        .round.blurred h2,
+        .round.blurred .match {
+            filter: blur(12px);
+            opacity: 0.6;
+            transform: scale(0.98) translateY(100px);
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+            pointer-events: none;
+        }
+        .round.revealed h2,
+        .round.revealed .match {
+            filter: none;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+<h1>El Gouna International 2024</h1>
+<p class="subtitle">Scroll down to reveal later rounds (spoiler-free viewing)</p>
+
+<div id="content"></div>
+
+<script>
+    const matches = [
+        { "id": "k2GW4w8AVyYs20Awibu", "title": "Round 3 – Mostafa Asal v Dimitri Steinmann", "round": "ROUND3", "date": "2024-04-22", "duration": "1:02", "upset": false },
+        { "id": "k4yfBhDdKQVODWAvP8O", "title": "Round 3 – Ali Farag v Nicolas Mueller", "round": "ROUND3", "date": "2024-04-21", "duration": "0:54", "upset": false },
+        { "id": "k5xOtE7fUMN5n6AvRAI", "title": "Round 3 – Ramit Tandon v Diego Elias", "round": "ROUND3", "date": "2024-04-21", "duration": "0:52", "upset": false },
+        { "id": "k6e4fSyIbeEGG2Awfp6", "title": "Round 3 – Gregoire Marche v Paul Coll", "round": "ROUND3", "date": "2024-04-22", "duration": "0:49", "upset": false },
+        { "id": "kXq7YNhaqCWFCyAx5Fs", "title": "Quarter Final – Karim Abdel Gawad v Paul Coll", "round": "QUARTER_FINAL", "date": "2024-04-24", "duration": "1:11", "upset": true },
+        { "id": "k79VQbfrm3dqLpAwILq", "title": "Quarter Final – Tarek Momen v Diego Elias", "round": "QUARTER_FINAL", "date": "2024-04-23", "duration": "1:10", "upset": true },
+        { "id": "keni5GArW797RDAwESw", "title": "Quarter Final – Ali Farag v Mohamed Elshorbagy", "round": "QUARTER_FINAL", "date": "2024-04-23", "duration": "0:59", "upset": false },
+        { "id": "ko4MVVid6p1MNZAxaaS", "title": "Quarter Final – Mostafa Asal v Aly Abou Eleinen", "round": "QUARTER_FINAL", "date": "2024-04-24", "duration": "0:56", "upset": false },
+        { "id": "k5iApqUBKvRMKqAxzaM", "title": "Semi Final – Mostafa Asal v Karim Abdel Gawad", "round": "SEMI_FINAL", "date": "2024-04-25", "duration": "1:10", "upset": false },
+        { "id": "k7uxFArO1EYGOeAxw2U", "title": "Semi Final – Ali Farag v Tarek Momen", "round": "SEMI_FINAL", "date": "2024-04-25", "duration": "1:03", "upset": false },
+        { "id": "k5QjA0xuCSlVP3AxU5S", "title": "Final – Mostafa Asal v Ali Farag", "round": "FINAL", "date": "2024-04-26", "duration": "1:30", "upset": false }
+    ];
+
+    const ROUND_ORDER = ['ROUND1', 'ROUND2', 'ROUND3', 'QUARTER_FINAL', 'SEMI_FINAL', 'FINAL'];
+    const ROUND_NAMES = {
+        'ROUND1': 'Round 1',
+        'ROUND2': 'Round 2',
+        'ROUND3': 'Round 3',
+        'QUARTER_FINAL': 'Quarter Finals',
+        'SEMI_FINAL': 'Semi Finals',
+        'FINAL': 'Final'
+    };
+
+    function groupByRound(matches) {
+        const groups = {};
+        matches.forEach(m => {
+            if (!groups[m.round]) groups[m.round] = [];
+            groups[m.round].push(m);
+        });
+        // Sort each group by upset (true first), then duration descending
+        Object.values(groups).forEach(arr =>
+            arr.sort((a, b) =>
+                (b.upset - a.upset) || (parseDuration(b.duration) - parseDuration(a.duration))
+            )
+        );
+        return groups;
+    }
+
+    function parseDuration(str) {
+        const [h, m] = str.split(':').map(Number);
+        return h * 60 + m;
+    }
+
+    function renderCard(match) {
+        const url = 'https://www.dailymotion.com/video/' + match.id;
+        const thumb = 'https://www.dailymotion.com/thumbnail/video/' + match.id;
+        const upsetClass = match.upset ? ' upset' : '';
+        return `
+            <div class="match${upsetClass}">
+                <a href="${url}" target="_blank" rel="noopener">
+                    <div class="thumb-container">
+                        <img class="thumbnail" src="${thumb}" alt="${match.title}" loading="lazy">
+                        <span class="duration">${match.duration}</span>
+                    </div>
+                    <div class="info">
+                        <div class="title">${match.title}</div>
+                        <div class="meta">${match.date}</div>
+                    </div>
+                </a>
+            </div>
+        `;
+    }
+
+    function render() {
+        const groups = groupByRound(matches);
+        const content = document.getElementById('content');
+        let firstRoundSeen = false;
+
+        ROUND_ORDER.forEach(round => {
+            const roundMatches = groups[round];
+            if (!roundMatches || roundMatches.length === 0) return;
+
+            const isBlurred = firstRoundSeen;
+            firstRoundSeen = true;
+
+            const section = document.createElement('section');
+            section.className = 'round' + (isBlurred ? ' blurred' : '');
+            section.dataset.round = round;
+            section.innerHTML = `
+                <h2>${ROUND_NAMES[round] || round}</h2>
+                <div class="matches">
+                    ${roundMatches.map(renderCard).join('')}
+                </div>
+            `;
+            content.appendChild(section);
+        });
+
+        // Setup IntersectionObserver for blur reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.remove('blurred');
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
+
+        document.querySelectorAll('.round.blurred').forEach(s => observer.observe(s));
+    }
+
+    render();
+</script>
+</body>
 </html>
