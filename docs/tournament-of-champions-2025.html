@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.P. Morgan Tournament of Champions 2025 - Spoiler-Free</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #0d0d0d;
+            color: #fff;
+        }
+        h1 {
+            color: #ff6b00;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 24px;
+        }
+        h2 {
+            color: #ff6b00;
+            font-size: 1.2em;
+            margin: 24px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        .matches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .match {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .match:hover,
+        .round.revealed .match:hover { transform: scale(1.02); }
+        .match a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+        .no-thumb {
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #2b2b2b, #151515);
+            color: #888;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .info { padding: 12px; }
+        .title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #888;
+            font-size: 0.75em;
+        }
+        .duration {
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
+        .thumb-container { position: relative; }
+        .match.upset .thumb-container {
+            border: 3px solid #ff6b00;
+            border-radius: 8px;
+        }
+
+        .round.blurred h2,
+        .round.blurred .match {
+            filter: blur(12px);
+            opacity: 0.6;
+            transform: scale(0.98) translateY(100px);
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+            pointer-events: none;
+        }
+        .round.revealed h2,
+        .round.revealed .match {
+            filter: none;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>J.P. Morgan Tournament of Champions 2025</h1>
+    <p class="subtitle">Scroll down to reveal later rounds (spoiler-free viewing)</p>
+
+    <div id="content"></div>
+
+    <script>
+        const matches = [ {
+  "videoUrl" : "https://www.dailymotion.com/video/k5mu44b2RDc7hLCrmhG",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5mu44b2RDc7hLCrmhG",
+  "title" : "Finales - Diego Elias v Ali Farag [FRENCH COMMS]",
+  "round" : "OTHER",
+  "date" : "2025-02-13",
+  "duration" : "1:17:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1y9D17zbWKLaOCpeIC",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1y9D17zbWKLaOCpeIC",
+  "title" : "1/4 Finales - Gregoire Marche v Paul Coll [FRENCH COMMS]",
+  "round" : "OTHER",
+  "date" : "2025-02-13",
+  "duration" : "1:11:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k5pJEZ0CCPY0TnCrmhE",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5pJEZ0CCPY0TnCrmhE",
+  "title" : "1/2 Finales - Ali Farag v Paul Coll [FRENCH COMMS]",
+  "round" : "OTHER",
+  "date" : "2025-02-13",
+  "duration" : "2:21:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2Y3wsCczX5PvHCpeIE",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2Y3wsCczX5PvHCpeIE",
+  "title" : "1er Tour - Karim Gawad v Gregoire Marche [FRENCH COMMS]",
+  "round" : "OTHER",
+  "date" : "2025-02-13",
+  "duration" : "1:27:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2CnaHIk0jgppjCpeIA",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2CnaHIk0jgppjCpeIA",
+  "title" : "1er Tour - Miguel Rodriguez v Victor Crouin [FRENCH COMMS]",
+  "round" : "OTHER",
+  "date" : "2025-02-13",
+  "duration" : "1:22:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/ko6yV8Ki4Fz2HFCiom0",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/ko6yV8Ki4Fz2HFCiom0",
+  "title" : "Round 1 - Karim Gawad v Gregoire Marche",
+  "round" : "ROUND1",
+  "date" : "2025-01-23",
+  "duration" : "1:51:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k61GVUKdrFbiCRCivEw",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k61GVUKdrFbiCRCivEw",
+  "title" : "Round 1 - Miguel Rodriguez v Victor Crouin",
+  "round" : "ROUND1",
+  "date" : "2025-01-23",
+  "duration" : "1:26:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1rvnLmWxRr8PRCiMmA",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1rvnLmWxRr8PRCiMmA",
+  "title" : "Round 1 - Diego Elias v Mohamad Zakaria",
+  "round" : "ROUND1",
+  "date" : "2025-01-24",
+  "duration" : "1:20:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k56KxddNZJILjqCixQw",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k56KxddNZJILjqCixQw",
+  "title" : "Round 1 - Auguste Dussourd v Paul Coll",
+  "round" : "ROUND1",
+  "date" : "2025-01-24",
+  "duration" : "1:18:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kCwY9IXnVRf86fCiJyC",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kCwY9IXnVRf86fCiJyC",
+  "title" : "Round 1 - Leonel Cardenas v Joel Makin",
+  "round" : "ROUND1",
+  "date" : "2025-01-24",
+  "duration" : "1:05:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k5WwM2hi7tg0tUCixjw",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5WwM2hi7tg0tUCixjw",
+  "title" : "Round 1 - Ali Farag v Youssef Soliman",
+  "round" : "ROUND1",
+  "date" : "2025-01-24",
+  "duration" : "1:05:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7rMnZ1pfhWiHKCiQO0",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7rMnZ1pfhWiHKCiQO0",
+  "title" : "Round 1 - Aly Abou Eleinen v Mostafa Asal",
+  "round" : "ROUND1",
+  "date" : "2025-01-24",
+  "duration" : "1:04:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k76lYzUKaSI2sHCiSBi",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k76lYzUKaSI2sHCiSBi",
+  "title" : "Round 1 - Tarek Momen v Nicolas Mueller",
+  "round" : "ROUND1",
+  "date" : "2025-01-25",
+  "duration" : "0:57:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k5AU6g1OEaKVnGCj5fK",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5AU6g1OEaKVnGCj5fK",
+  "title" : "Round 2 - Gregoire Marche v Baptiste Masotti",
+  "round" : "ROUND2",
+  "date" : "2025-01-25",
+  "duration" : "1:00:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1M9XRHzbeLb58Cjqsi",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1M9XRHzbeLb58Cjqsi",
+  "title" : "Round 2 - Youssef Ibrahim v Joel Makin",
+  "round" : "ROUND2",
+  "date" : "2025-01-26",
+  "duration" : "1:48:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6YxyO4190uAmhCj8nw",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6YxyO4190uAmhCj8nw",
+  "title" : "Round 2 - Victor Crouin v Paul Coll",
+  "round" : "ROUND2",
+  "date" : "2025-01-25",
+  "duration" : "1:12:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4YLnNIlgO277uCjx3M",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4YLnNIlgO277uCjx3M",
+  "title" : "Round 2 - Tarek Momen v Fares Dessouky",
+  "round" : "ROUND2",
+  "date" : "2025-01-27",
+  "duration" : "1:03:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7h1E4AxaXiEKPCjuoK",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7h1E4AxaXiEKPCjuoK",
+  "title" : "Round 2 - Diego Elias v Mohamed Abouelghar",
+  "round" : "ROUND2",
+  "date" : "2025-01-26",
+  "duration" : "1:02:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k41NMPblLCv5sRCjcOe",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k41NMPblLCv5sRCjcOe",
+  "title" : "Round 2 - Mohamed ElSherbini v Mohamed ElShorbagy",
+  "round" : "ROUND2",
+  "date" : "2025-01-26",
+  "duration" : "1:00:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2yYTsDZ1R6PTuCjb0m",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2yYTsDZ1R6PTuCjb0m",
+  "title" : "Round 2 - Ali Farag v Abdulla Al-Tamimi",
+  "round" : "ROUND2",
+  "date" : "2025-01-25",
+  "duration" : "0:56:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3dgtr9FYkrNLHCjwmY",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3dgtr9FYkrNLHCjwmY",
+  "title" : "Round 2 - Timothy Brownell v Mostafa Asal",
+  "round" : "ROUND2",
+  "date" : "2025-01-26",
+  "duration" : "0:46:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k5WF5xTIzmck1eCjUow",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5WF5xTIzmck1eCjUow",
+  "title" : "Quarter Final - Ali Farag v Mohamed ElShorbagy",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-01-28",
+  "duration" : "1:26:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kYdlnRL7xDW42BCjVsy",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kYdlnRL7xDW42BCjVsy",
+  "title" : "Quarter Final - Gregoire Marche v Paul Coll",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-01-28",
+  "duration" : "1:18:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1MFKHcPJPSkeJCkiQi",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1MFKHcPJPSkeJCkiQi",
+  "title" : "Quarter Final - Diego Elias v Joel Makin",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-01-29",
+  "duration" : "1:18:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k54qXeDz8vinxNCkhV4",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k54qXeDz8vinxNCkhV4",
+  "title" : "Quarter Final - Tarek Momen v Mostafa Asal",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-01-29",
+  "duration" : "0:59:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/khuvUduAyyVpcTCkJnI",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/khuvUduAyyVpcTCkJnI",
+  "title" : "Semi Final - Diego Elias v Mostafa Asal",
+  "round" : "SEMI_FINAL",
+  "date" : "2025-01-30",
+  "duration" : "1:24:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4Fhvbz7eKhZnGCkGVs",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4Fhvbz7eKhZnGCkGVs",
+  "title" : "Semi Final - Ali Farag v Paul Coll",
+  "round" : "SEMI_FINAL",
+  "date" : "2025-01-30",
+  "duration" : "1:06:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1xvs06St9Zb1hClatU",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1xvs06St9Zb1hClatU",
+  "title" : "Final - Diego Elias v Ali Farag",
+  "round" : "FINAL",
+  "date" : "2025-01-31",
+  "duration" : "1:35:00",
+  "upset" : false
+} ];
+
+        const ROUND_ORDER = ['ROUND1', 'ROUND2', 'ROUND3', 'QUARTER_FINAL', 'SEMI_FINAL', 'FINAL'];
+        const ROUND_NAMES = {
+            'ROUND1': 'Round 1',
+            'ROUND2': 'Round 2',
+            'ROUND3': 'Round 3',
+            'QUARTER_FINAL': 'Quarter Finals',
+            'SEMI_FINAL': 'Semi Finals',
+            'FINAL': 'Final'
+        };
+
+        function groupByRound(matches) {
+            const groups = {};
+            matches.forEach(m => {
+                if (!groups[m.round]) groups[m.round] = [];
+                groups[m.round].push(m);
+            });
+            Object.values(groups).forEach(arr =>
+                arr.sort((a, b) =>
+                    (b.upset - a.upset) || (parseDuration(b.duration) - parseDuration(a.duration))
+                )
+            );
+            return groups;
+        }
+
+        function parseDuration(str) {
+            const [h, m, s] = str.split(':').map(Number);
+            return h * 3600 + m * 60 + s;
+        }
+
+        function renderCard(match) {
+            const upsetClass = match.upset ? ' upset' : '';
+            const media = match.thumbnailUrl
+                ? `<img class="thumbnail" src="${match.thumbnailUrl}" alt="${match.title}" loading="lazy">`
+                : `<div class="thumbnail no-thumb">Video</div>`;
+            return `
+                <div class="match${upsetClass}">
+                    <a href="${match.videoUrl}" target="_blank" rel="noopener">
+                        <div class="thumb-container">
+                            ${media}
+                            <span class="duration">${match.duration}</span>
+                        </div>
+                        <div class="info">
+                            <div class="title">${match.title}</div>
+                            <div class="meta">${match.date}</div>
+                        </div>
+                    </a>
+                </div>
+            `;
+        }
+
+        function render() {
+            const groups = groupByRound(matches);
+            const content = document.getElementById('content');
+            let firstRoundSeen = false;
+
+            ROUND_ORDER.forEach(round => {
+                const roundMatches = groups[round];
+                if (!roundMatches || roundMatches.length === 0) return;
+
+                const isBlurred = firstRoundSeen;
+                firstRoundSeen = true;
+
+                const section = document.createElement('section');
+                section.className = 'round' + (isBlurred ? ' blurred' : '');
+                section.dataset.round = round;
+                section.innerHTML = `
+                    <h2>${ROUND_NAMES[round] || round}</h2>
+                    <div class="matches">
+                        ${roundMatches.map(renderCard).join('')}
+                    </div>
+                `;
+                content.appendChild(section);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('blurred');
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
+
+            document.querySelectorAll('.round.blurred').forEach(s => observer.observe(s));
+        }
+
+        render();
+    </script>
+</body>
+</html>

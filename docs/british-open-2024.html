@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>British Open 2024 - Spoiler-Free</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #0d0d0d;
+            color: #fff;
+        }
+        h1 {
+            color: #ff6b00;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 24px;
+        }
+        h2 {
+            color: #ff6b00;
+            font-size: 1.2em;
+            margin: 24px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        .matches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .match {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .match:hover,
+        .round.revealed .match:hover { transform: scale(1.02); }
+        .match a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+        .no-thumb {
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #2b2b2b, #151515);
+            color: #888;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .info { padding: 12px; }
+        .title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #888;
+            font-size: 0.75em;
+        }
+        .duration {
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
+        .thumb-container { position: relative; }
+        .match.upset .thumb-container {
+            border: 3px solid #ff6b00;
+            border-radius: 8px;
+        }
+
+        .round.blurred h2,
+        .round.blurred .match {
+            filter: blur(12px);
+            opacity: 0.6;
+            transform: scale(0.98) translateY(100px);
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+            pointer-events: none;
+        }
+        .round.revealed h2,
+        .round.revealed .match {
+            filter: none;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>British Open 2024</h1>
+    <p class="subtitle">Scroll down to reveal later rounds (spoiler-free viewing)</p>
+
+    <div id="content"></div>
+
+    <script>
+        const matches = [ {
+  "videoUrl" : "https://www.dailymotion.com/video/k68Pvt7NSdNj1VALYOu",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k68Pvt7NSdNj1VALYOu",
+  "title" : "Round 1- Andrew Douglas v Leandro Romiglio",
+  "round" : "OTHER",
+  "date" : "2024-06-02",
+  "duration" : "1:14:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3fY5BXDR1JPSwAM7n6",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3fY5BXDR1JPSwAM7n6",
+  "title" : "Round 1 - Simon Herbert v Leonel Cardenas",
+  "round" : "ROUND1",
+  "date" : "2024-06-02",
+  "duration" : "1:26:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1AW9lVGpYcH3XAM4yk",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1AW9lVGpYcH3XAM4yk",
+  "title" : "Round 1 - Nicolas Mueller v George Parker",
+  "round" : "ROUND1",
+  "date" : "2024-06-02",
+  "duration" : "1:16:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k77zIt2HtqLEUaALVWM",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k77zIt2HtqLEUaALVWM",
+  "title" : "Round 1 - Jonah Bryant v Youssef Ibrahim",
+  "round" : "ROUND1",
+  "date" : "2024-06-02",
+  "duration" : "1:14:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6a9DX2wqyWjgCAMmBy",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6a9DX2wqyWjgCAMmBy",
+  "title" : "Round 2 - Greg Lobban v Mohamed Elshorbagy",
+  "round" : "ROUND2",
+  "date" : "2024-06-03",
+  "duration" : "1:06:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4Rw5nwvVyXA6WAMloC",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4Rw5nwvVyXA6WAMloC",
+  "title" : "Round 2 - George Parker v Paul Coll",
+  "round" : "ROUND2",
+  "date" : "2024-06-03",
+  "duration" : "1:03:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k5EZWseqegqnH6AMtLM",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5EZWseqegqnH6AMtLM",
+  "title" : "Round 2 - Ali Farag v Omar Mosaad",
+  "round" : "ROUND2",
+  "date" : "2024-06-03",
+  "duration" : "0:58:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7kfDQ0DWoQ7CkAMjkC",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7kfDQ0DWoQ7CkAMjkC",
+  "title" : "Round 2 - Tarek Momen v Joel Makin",
+  "round" : "ROUND2",
+  "date" : "2024-06-03",
+  "duration" : "0:55:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6pK6xCSyex1I4AMpLg",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6pK6xCSyex1I4AMpLg",
+  "title" : "Round 2 - Victor Crouin v Diego Elias",
+  "round" : "ROUND2",
+  "date" : "2024-06-03",
+  "duration" : "0:44:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2mnT93xHpGPM6AN8eM",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2mnT93xHpGPM6AN8eM",
+  "title" : "Round 3 - Karim Abdel Gawad v Eain Yow Ng",
+  "round" : "ROUND3",
+  "date" : "2024-06-05",
+  "duration" : "1:28:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k349Vg6TceyEubAMTSE",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k349Vg6TceyEubAMTSE",
+  "title" : "Round 3 - Farkas Balazs v Mazen Hesham",
+  "round" : "ROUND3",
+  "date" : "2024-06-04",
+  "duration" : "1:08:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1eRgxNBMfrJdMAMIvk",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1eRgxNBMfrJdMAMIvk",
+  "title" : "Round 3 - Joel Makin v Youssef Ibrahim",
+  "round" : "ROUND3",
+  "date" : "2024-06-04",
+  "duration" : "1:31:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kXgmMmimkXBBWAAMLzC",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kXgmMmimkXBBWAAMLzC",
+  "title" : "Round 3 - Youssef Soliman v Diego Elias",
+  "round" : "ROUND3",
+  "date" : "2024-06-04",
+  "duration" : "0:59:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4E8W11rvdUzuWANtgc",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4E8W11rvdUzuWANtgc",
+  "title" : "Round 3 - Mostafa Asal v Marwan Elshorbagy",
+  "round" : "ROUND3",
+  "date" : "2024-06-05",
+  "duration" : "0:57:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k5lSoik1DzfVKTAMPGe",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5lSoik1DzfVKTAMPGe",
+  "title" : "Round 3 - Ali Farag v Mohamed Abouelgar",
+  "round" : "ROUND3",
+  "date" : "2024-06-04",
+  "duration" : "0:55:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kNEaK9FAKCcm81ANfpK",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kNEaK9FAKCcm81ANfpK",
+  "title" : "Round 3 - Miguel Rodriguez v Paul Coll",
+  "round" : "ROUND3",
+  "date" : "2024-06-05",
+  "duration" : "0:47:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kA2sCG2I7KIgYWAO1mK",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kA2sCG2I7KIgYWAO1mK",
+  "title" : "Quarter Final - Joel Makin v Diego Elias",
+  "round" : "QUARTER_FINAL",
+  "date" : "2024-06-06",
+  "duration" : "1:24:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kqWjFCDJh8AwFcAOE88",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kqWjFCDJh8AwFcAOE88",
+  "title" : "Quarter Final - Mostafa Asal v Timothy Brownell",
+  "round" : "QUARTER_FINAL",
+  "date" : "2024-06-07",
+  "duration" : "1:05:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2ijhU8EKOM11BAO8Eo",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2ijhU8EKOM11BAO8Eo",
+  "title" : "Quarter Final - Ali Farag v Mazen Hesham",
+  "round" : "QUARTER_FINAL",
+  "date" : "2024-06-06",
+  "duration" : "0:58:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3hNbySw9AGYrAAOD7q",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3hNbySw9AGYrAAOD7q",
+  "title" : "Quarter Final - Eain Yow Ng v Paul Coll",
+  "round" : "QUARTER_FINAL",
+  "date" : "2024-06-07",
+  "duration" : "0:43:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k61woFaOoF9mBbAP7h4",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k61woFaOoF9mBbAP7h4",
+  "title" : "Semi Final - Mostafa Asal v Paul Coll",
+  "round" : "SEMI_FINAL",
+  "date" : "2024-06-08",
+  "duration" : "1:22:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1bBroj3apsoauAP3sM",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1bBroj3apsoauAP3sM",
+  "title" : "Semi Final - Ali Farag v Joel Makin",
+  "round" : "SEMI_FINAL",
+  "date" : "2024-06-08",
+  "duration" : "1:11:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3kZKq32yYoZRJAPuqi",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3kZKq32yYoZRJAPuqi",
+  "title" : "Final - Mostafa Asal v Ali Farag",
+  "round" : "FINAL",
+  "date" : "2024-06-09",
+  "duration" : "1:53:00",
+  "upset" : false
+} ];
+
+        const ROUND_ORDER = ['ROUND1', 'ROUND2', 'ROUND3', 'QUARTER_FINAL', 'SEMI_FINAL', 'FINAL'];
+        const ROUND_NAMES = {
+            'ROUND1': 'Round 1',
+            'ROUND2': 'Round 2',
+            'ROUND3': 'Round 3',
+            'QUARTER_FINAL': 'Quarter Finals',
+            'SEMI_FINAL': 'Semi Finals',
+            'FINAL': 'Final'
+        };
+
+        function groupByRound(matches) {
+            const groups = {};
+            matches.forEach(m => {
+                if (!groups[m.round]) groups[m.round] = [];
+                groups[m.round].push(m);
+            });
+            Object.values(groups).forEach(arr =>
+                arr.sort((a, b) =>
+                    (b.upset - a.upset) || (parseDuration(b.duration) - parseDuration(a.duration))
+                )
+            );
+            return groups;
+        }
+
+        function parseDuration(str) {
+            const [h, m, s] = str.split(':').map(Number);
+            return h * 3600 + m * 60 + s;
+        }
+
+        function renderCard(match) {
+            const upsetClass = match.upset ? ' upset' : '';
+            const media = match.thumbnailUrl
+                ? `<img class="thumbnail" src="${match.thumbnailUrl}" alt="${match.title}" loading="lazy">`
+                : `<div class="thumbnail no-thumb">Video</div>`;
+            return `
+                <div class="match${upsetClass}">
+                    <a href="${match.videoUrl}" target="_blank" rel="noopener">
+                        <div class="thumb-container">
+                            ${media}
+                            <span class="duration">${match.duration}</span>
+                        </div>
+                        <div class="info">
+                            <div class="title">${match.title}</div>
+                            <div class="meta">${match.date}</div>
+                        </div>
+                    </a>
+                </div>
+            `;
+        }
+
+        function render() {
+            const groups = groupByRound(matches);
+            const content = document.getElementById('content');
+            let firstRoundSeen = false;
+
+            ROUND_ORDER.forEach(round => {
+                const roundMatches = groups[round];
+                if (!roundMatches || roundMatches.length === 0) return;
+
+                const isBlurred = firstRoundSeen;
+                firstRoundSeen = true;
+
+                const section = document.createElement('section');
+                section.className = 'round' + (isBlurred ? ' blurred' : '');
+                section.dataset.round = round;
+                section.innerHTML = `
+                    <h2>${ROUND_NAMES[round] || round}</h2>
+                    <div class="matches">
+                        ${roundMatches.map(renderCard).join('')}
+                    </div>
+                `;
+                content.appendChild(section);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('blurred');
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
+
+            document.querySelectorAll('.round.blurred').forEach(s => observer.observe(s));
+        }
+
+        render();
+    </script>
+</body>
+</html>

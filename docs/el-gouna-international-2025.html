@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Gouna International Squash Open 2025 - Spoiler-Free</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #0d0d0d;
+            color: #fff;
+        }
+        h1 {
+            color: #ff6b00;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 24px;
+        }
+        h2 {
+            color: #ff6b00;
+            font-size: 1.2em;
+            margin: 24px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        .matches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .match {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .match:hover,
+        .round.revealed .match:hover { transform: scale(1.02); }
+        .match a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+        .no-thumb {
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #2b2b2b, #151515);
+            color: #888;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .info { padding: 12px; }
+        .title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #888;
+            font-size: 0.75em;
+        }
+        .duration {
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
+        .thumb-container { position: relative; }
+        .match.upset .thumb-container {
+            border: 3px solid #ff6b00;
+            border-radius: 8px;
+        }
+
+        .round.blurred h2,
+        .round.blurred .match {
+            filter: blur(12px);
+            opacity: 0.6;
+            transform: scale(0.98) translateY(100px);
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+            pointer-events: none;
+        }
+        .round.revealed h2,
+        .round.revealed .match {
+            filter: none;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>El Gouna International Squash Open 2025</h1>
+    <p class="subtitle">Scroll down to reveal later rounds (spoiler-free viewing)</p>
+
+    <div id="content"></div>
+
+    <script>
+        const matches = [ {
+  "videoUrl" : "https://www.dailymotion.com/video/k2Wdczn4grkG1PCQPB4",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2Wdczn4grkG1PCQPB4",
+  "title" : "Round 1 - Mohamed ElSherbini v Mostafa Asal",
+  "round" : "ROUND1",
+  "date" : "2025-04-12",
+  "duration" : "0:58:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k5l9RmjTzz1bZBCR2iS",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5l9RmjTzz1bZBCR2iS",
+  "title" : "Round 1 - Ali Farag Vs Aly Ezzat",
+  "round" : "ROUND1",
+  "date" : "2025-04-13",
+  "duration" : "0:34:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6rGRkkEUMkvkjCRa8e",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6rGRkkEUMkvkjCRa8e",
+  "title" : "Round 2 - Aly Abou Eleinen v Joel Makin",
+  "round" : "ROUND2",
+  "date" : "2025-04-13",
+  "duration" : "1:29:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3AoRQ7I9CJQhICRxEI",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3AoRQ7I9CJQhICRxEI",
+  "title" : "Round 2 - Paul Coll v Greg Lobban",
+  "round" : "ROUND2",
+  "date" : "2025-04-14",
+  "duration" : "1:13:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4ccwlCr9X0bhnCR7Y6",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4ccwlCr9X0bhnCR7Y6",
+  "title" : "Round 2 - Ali Farag v Jonah Bryant",
+  "round" : "ROUND2",
+  "date" : "2025-04-13",
+  "duration" : "0:54:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1uNkl7Ovgnca4CRB42",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1uNkl7Ovgnca4CRB42",
+  "title" : "Round 2 - Gregoire Marche v Mostafa Asal",
+  "round" : "ROUND2",
+  "date" : "2025-04-14",
+  "duration" : "0:48:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2f2557XLIIzqNCSq8A",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2f2557XLIIzqNCSq8A",
+  "title" : "Quarter Final - Paul Coll v Mohamad Zakaria",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-04-16",
+  "duration" : "1:22:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k39bqEsI5RwVOaCRYFw",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k39bqEsI5RwVOaCRYFw",
+  "title" : "Quarter Final - Mohamed ElShorbagy v Joel Makin",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-04-15",
+  "duration" : "1:05:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kHdtg9hliusBwyCRXEe",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kHdtg9hliusBwyCRXEe",
+  "title" : "Quarter Final - Ali Farag v Youssef Soliman",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-04-15",
+  "duration" : "0:49:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4TgRo6M1tBT5SCSRFW",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4TgRo6M1tBT5SCSRFW",
+  "title" : "Semi Final - Ali Farag v Joel Makin",
+  "round" : "SEMI_FINAL",
+  "date" : "2025-04-17",
+  "duration" : "1:36:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3C48wL4DROORfCSSNw",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3C48wL4DROORfCSSNw",
+  "title" : "Semi Final - Paul Coll v Mostafa Asal",
+  "round" : "SEMI_FINAL",
+  "date" : "2025-04-18",
+  "duration" : "1:32:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6yczQoYWMLxxgCTf5s",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6yczQoYWMLxxgCTf5s",
+  "title" : "Final - Ali Farag v Mostafa Asal",
+  "round" : "FINAL",
+  "date" : "2025-04-19",
+  "duration" : "2:09:00",
+  "upset" : false
+} ];
+
+        const ROUND_ORDER = ['ROUND1', 'ROUND2', 'ROUND3', 'QUARTER_FINAL', 'SEMI_FINAL', 'FINAL'];
+        const ROUND_NAMES = {
+            'ROUND1': 'Round 1',
+            'ROUND2': 'Round 2',
+            'ROUND3': 'Round 3',
+            'QUARTER_FINAL': 'Quarter Finals',
+            'SEMI_FINAL': 'Semi Finals',
+            'FINAL': 'Final'
+        };
+
+        function groupByRound(matches) {
+            const groups = {};
+            matches.forEach(m => {
+                if (!groups[m.round]) groups[m.round] = [];
+                groups[m.round].push(m);
+            });
+            Object.values(groups).forEach(arr =>
+                arr.sort((a, b) =>
+                    (b.upset - a.upset) || (parseDuration(b.duration) - parseDuration(a.duration))
+                )
+            );
+            return groups;
+        }
+
+        function parseDuration(str) {
+            const [h, m, s] = str.split(':').map(Number);
+            return h * 3600 + m * 60 + s;
+        }
+
+        function renderCard(match) {
+            const upsetClass = match.upset ? ' upset' : '';
+            const media = match.thumbnailUrl
+                ? `<img class="thumbnail" src="${match.thumbnailUrl}" alt="${match.title}" loading="lazy">`
+                : `<div class="thumbnail no-thumb">Video</div>`;
+            return `
+                <div class="match${upsetClass}">
+                    <a href="${match.videoUrl}" target="_blank" rel="noopener">
+                        <div class="thumb-container">
+                            ${media}
+                            <span class="duration">${match.duration}</span>
+                        </div>
+                        <div class="info">
+                            <div class="title">${match.title}</div>
+                            <div class="meta">${match.date}</div>
+                        </div>
+                    </a>
+                </div>
+            `;
+        }
+
+        function render() {
+            const groups = groupByRound(matches);
+            const content = document.getElementById('content');
+            let firstRoundSeen = false;
+
+            ROUND_ORDER.forEach(round => {
+                const roundMatches = groups[round];
+                if (!roundMatches || roundMatches.length === 0) return;
+
+                const isBlurred = firstRoundSeen;
+                firstRoundSeen = true;
+
+                const section = document.createElement('section');
+                section.className = 'round' + (isBlurred ? ' blurred' : '');
+                section.dataset.round = round;
+                section.innerHTML = `
+                    <h2>${ROUND_NAMES[round] || round}</h2>
+                    <div class="matches">
+                        ${roundMatches.map(renderCard).join('')}
+                    </div>
+                `;
+                content.appendChild(section);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('blurred');
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
+
+            document.querySelectorAll('.round.blurred').forEach(s => observer.observe(s));
+        }
+
+        render();
+    </script>
+</body>
+</html>

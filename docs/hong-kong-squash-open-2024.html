@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Milwaukee Hong Kong Squash Open 2024 - Spoiler-Free</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #0d0d0d;
+            color: #fff;
+        }
+        h1 {
+            color: #ff6b00;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 24px;
+        }
+        h2 {
+            color: #ff6b00;
+            font-size: 1.2em;
+            margin: 24px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        .matches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .match {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .match:hover,
+        .round.revealed .match:hover { transform: scale(1.02); }
+        .match a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+        .no-thumb {
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #2b2b2b, #151515);
+            color: #888;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .info { padding: 12px; }
+        .title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #888;
+            font-size: 0.75em;
+        }
+        .duration {
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
+        .thumb-container { position: relative; }
+        .match.upset .thumb-container {
+            border: 3px solid #ff6b00;
+            border-radius: 8px;
+        }
+
+        .round.blurred h2,
+        .round.blurred .match {
+            filter: blur(12px);
+            opacity: 0.6;
+            transform: scale(0.98) translateY(100px);
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+            pointer-events: none;
+        }
+        .round.revealed h2,
+        .round.revealed .match {
+            filter: none;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>Milwaukee Hong Kong Squash Open 2024</h1>
+    <p class="subtitle">Scroll down to reveal later rounds (spoiler-free viewing)</p>
+
+    <div id="content"></div>
+
+    <script>
+        const matches = [ {
+  "videoUrl" : "https://www.dailymotion.com/video/k58DfeUkx4tia3BYHNe",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k58DfeUkx4tia3BYHNe",
+  "title" : "Round 1 - Leonel Cardenas v Mostafa Asal",
+  "round" : "ROUND1",
+  "date" : "2024-12-02",
+  "duration" : "1:00:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2amNJe4WeWpMJBYHyk",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2amNJe4WeWpMJBYHyk",
+  "title" : "Round 1 - Paul Coll v Eain Yow Ng",
+  "round" : "ROUND1",
+  "date" : "2024-12-02",
+  "duration" : "0:49:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2AFHZMkZlwlnyBYwkM",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2AFHZMkZlwlnyBYwkM",
+  "title" : "Round 1 - Ali Farag v Henry Leung",
+  "round" : "ROUND1",
+  "date" : "2024-12-02",
+  "duration" : "0:47:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7KWXUCcK2naLZBYwyS",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7KWXUCcK2naLZBYwyS",
+  "title" : "Round 1 - Mohamed ElSherbini v Diego Elias",
+  "round" : "ROUND1",
+  "date" : "2024-12-02",
+  "duration" : "0:00:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7qvHkWAZKsydhBZ3cA",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7qvHkWAZKsydhBZ3cA",
+  "title" : "Round 2 - Mohamad Zakaria v Mazen Hesham",
+  "round" : "ROUND2",
+  "date" : "2024-12-03",
+  "duration" : "1:12:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7pJMeyTysKAJBBYXQm",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7pJMeyTysKAJBBYXQm",
+  "title" : "Round 2 - Karim Abdel Gawad v Youssef Ibrahim",
+  "round" : "ROUND2",
+  "date" : "2024-12-03",
+  "duration" : "1:04:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1hCOtkSxqenwEBZq5a",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1hCOtkSxqenwEBZq5a",
+  "title" : "Round 2 - Tarek Momen v Marwan ElShorbagy",
+  "round" : "ROUND2",
+  "date" : "2024-12-04",
+  "duration" : "0:54:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4yGwwxTaP83WbBZn9Y",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4yGwwxTaP83WbBZn9Y",
+  "title" : "Round 2 - Fares Dessouky v Joel Makin",
+  "round" : "ROUND2",
+  "date" : "2024-12-04",
+  "duration" : "1:10:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1oCS0DzBDrZ2ZBZ26k",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1oCS0DzBDrZ2ZBZ26k",
+  "title" : "Round 2 - Ali Farag v Baptiste Masotti",
+  "round" : "ROUND2",
+  "date" : "2024-12-03",
+  "duration" : "1:04:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3mAMSboLvGxn5BZrp0",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3mAMSboLvGxn5BZrp0",
+  "title" : "Round 2 - Auguste Dussourd v Mostafa Asal",
+  "round" : "ROUND2",
+  "date" : "2024-12-04",
+  "duration" : "1:01:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k42MsentGRZPBzBZnaw",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k42MsentGRZPBzBZnaw",
+  "title" : "Round 2 - Paul Coll v Miguel Rodriguez",
+  "round" : "ROUND2",
+  "date" : "2024-12-04",
+  "duration" : "0:50:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7a4HeTJ8npfHkBYYOi",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7a4HeTJ8npfHkBYYOi",
+  "title" : "Round 2 - Dimitri Steinmann v Diego Elias",
+  "round" : "ROUND2",
+  "date" : "2024-12-03",
+  "duration" : "0:41:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7GLsRNbxJ0sHVC0erm",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7GLsRNbxJ0sHVC0erm",
+  "title" : "Quarter Final - Paul Coll v Joel Makin",
+  "round" : "QUARTER_FINAL",
+  "date" : "2024-12-06",
+  "duration" : "1:25:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4FiPF3jYUnuQbBZQeY",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4FiPF3jYUnuQbBZQeY",
+  "title" : "Quarter Final - Diego Elias v Youssef Ibrahim",
+  "round" : "QUARTER_FINAL",
+  "date" : "2024-12-05",
+  "duration" : "1:13:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k7Jlc2CG0saJBEC0hno",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k7Jlc2CG0saJBEC0hno",
+  "title" : "Quarter Final - Tarek Momen v Mostafa Asal",
+  "round" : "QUARTER_FINAL",
+  "date" : "2024-12-06",
+  "duration" : "1:02:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2hFASkQSoQthvC0Bl4",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2hFASkQSoQthvC0Bl4",
+  "title" : "Semi Final - Ali Farag v Diego Elias",
+  "round" : "SEMI_FINAL",
+  "date" : "2024-12-07",
+  "duration" : "1:20:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3xvepij19J2X8C0Eg6",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3xvepij19J2X8C0Eg6",
+  "title" : "Semi Final - Joel Makin v Mostafa Asal",
+  "round" : "SEMI_FINAL",
+  "date" : "2024-12-07",
+  "duration" : "1:12:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kzzmOFubcXIKp9C0Vlc",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kzzmOFubcXIKp9C0Vlc",
+  "title" : "Final - Ali Farag v Mostafa Asal",
+  "round" : "FINAL",
+  "date" : "2024-12-08",
+  "duration" : "1:30:00",
+  "upset" : false
+} ];
+
+        const ROUND_ORDER = ['ROUND1', 'ROUND2', 'ROUND3', 'QUARTER_FINAL', 'SEMI_FINAL', 'FINAL'];
+        const ROUND_NAMES = {
+            'ROUND1': 'Round 1',
+            'ROUND2': 'Round 2',
+            'ROUND3': 'Round 3',
+            'QUARTER_FINAL': 'Quarter Finals',
+            'SEMI_FINAL': 'Semi Finals',
+            'FINAL': 'Final'
+        };
+
+        function groupByRound(matches) {
+            const groups = {};
+            matches.forEach(m => {
+                if (!groups[m.round]) groups[m.round] = [];
+                groups[m.round].push(m);
+            });
+            Object.values(groups).forEach(arr =>
+                arr.sort((a, b) =>
+                    (b.upset - a.upset) || (parseDuration(b.duration) - parseDuration(a.duration))
+                )
+            );
+            return groups;
+        }
+
+        function parseDuration(str) {
+            const [h, m, s] = str.split(':').map(Number);
+            return h * 3600 + m * 60 + s;
+        }
+
+        function renderCard(match) {
+            const upsetClass = match.upset ? ' upset' : '';
+            const media = match.thumbnailUrl
+                ? `<img class="thumbnail" src="${match.thumbnailUrl}" alt="${match.title}" loading="lazy">`
+                : `<div class="thumbnail no-thumb">Video</div>`;
+            return `
+                <div class="match${upsetClass}">
+                    <a href="${match.videoUrl}" target="_blank" rel="noopener">
+                        <div class="thumb-container">
+                            ${media}
+                            <span class="duration">${match.duration}</span>
+                        </div>
+                        <div class="info">
+                            <div class="title">${match.title}</div>
+                            <div class="meta">${match.date}</div>
+                        </div>
+                    </a>
+                </div>
+            `;
+        }
+
+        function render() {
+            const groups = groupByRound(matches);
+            const content = document.getElementById('content');
+            let firstRoundSeen = false;
+
+            ROUND_ORDER.forEach(round => {
+                const roundMatches = groups[round];
+                if (!roundMatches || roundMatches.length === 0) return;
+
+                const isBlurred = firstRoundSeen;
+                firstRoundSeen = true;
+
+                const section = document.createElement('section');
+                section.className = 'round' + (isBlurred ? ' blurred' : '');
+                section.dataset.round = round;
+                section.innerHTML = `
+                    <h2>${ROUND_NAMES[round] || round}</h2>
+                    <div class="matches">
+                        ${roundMatches.map(renderCard).join('')}
+                    </div>
+                `;
+                content.appendChild(section);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('blurred');
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
+
+            document.querySelectorAll('.round.blurred').forEach(s => observer.observe(s));
+        }
+
+        render();
+    </script>
+</body>
+</html>
