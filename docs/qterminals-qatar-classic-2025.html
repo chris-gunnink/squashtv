@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QTerminals Qatar Classic 2025 - Spoiler-Free</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 16px;
+            background: #0d0d0d;
+            color: #fff;
+        }
+        h1 {
+            color: #ff6b00;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+            margin-bottom: 24px;
+        }
+        h2 {
+            color: #ff6b00;
+            font-size: 1.2em;
+            margin: 24px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        .matches {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+        .match {
+            background: #1a1a1a;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .match:hover,
+        .round.revealed .match:hover { transform: scale(1.02); }
+        .match a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .thumbnail {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block;
+        }
+        .no-thumb {
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #2b2b2b, #151515);
+            color: #888;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .info { padding: 12px; }
+        .title {
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #888;
+            font-size: 0.75em;
+        }
+        .duration {
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+        }
+        .thumb-container { position: relative; }
+        .match.upset .thumb-container {
+            border: 3px solid #ff6b00;
+            border-radius: 8px;
+        }
+
+        .round.blurred h2,
+        .round.blurred .match {
+            filter: blur(12px);
+            opacity: 0.6;
+            transform: scale(0.98) translateY(100px);
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+            pointer-events: none;
+        }
+        .round.revealed h2,
+        .round.revealed .match {
+            filter: none;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition: filter 0.5s ease-out, opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>QTerminals Qatar Classic 2025</h1>
+    <p class="subtitle">Scroll down to reveal later rounds (spoiler-free viewing)</p>
+
+    <div id="content"></div>
+
+    <script>
+        const matches = [ {
+  "videoUrl" : "https://www.dailymotion.com/video/k5YIYcvF7T4wnKDY0va",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5YIYcvF7T4wnKDY0va",
+  "title" : "Semi Final",
+  "round" : "SEMI_FINAL",
+  "date" : "2025-10-03",
+  "duration" : "4:10:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k69MsHr8xaxww1DYdUk",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k69MsHr8xaxww1DYdUk",
+  "title" : "Final",
+  "round" : "FINAL",
+  "date" : "2025-10-04",
+  "duration" : "2:52:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1I95GDFs3c4UFDVY4y",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1I95GDFs3c4UFDVY4y",
+  "title" : "Round 1 - Joel Makin v Mohamad Zakaria",
+  "round" : "ROUND1",
+  "date" : "2025-09-28",
+  "duration" : "1:18:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k66nU4TxHd8ODuDW00i",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k66nU4TxHd8ODuDW00i",
+  "title" : "Round 1 - Eain Yow Ng v Paul Coll",
+  "round" : "ROUND1",
+  "date" : "2025-09-28",
+  "duration" : "1:12:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2qr4fVnS1FznaDVVDg",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2qr4fVnS1FznaDVVDg",
+  "title" : "Round 1 - Youssef Ibrahim v Marwan Elshorbagy",
+  "round" : "ROUND1",
+  "date" : "2025-09-28",
+  "duration" : "0:57:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k72zRt6fRuBWYQDVXpk",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k72zRt6fRuBWYQDVXpk",
+  "title" : "Round 1 - Mostafa Asal v Ramit Tandon",
+  "round" : "ROUND1",
+  "date" : "2025-09-28",
+  "duration" : "0:46:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6euqExrnBUNIuDW1nG",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6euqExrnBUNIuDW1nG",
+  "title" : "Round 1 - Abdulla Mohd Al-Tamimi v Ali Al-Darwish",
+  "round" : "ROUND1",
+  "date" : "2025-09-28",
+  "duration" : "0:44:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6mkkFef7SeYkoDWVZm",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6mkkFef7SeYkoDWVZm",
+  "title" : "Round 2 - Mohamad Zakaria v Jonah Bryant",
+  "round" : "ROUND2",
+  "date" : "2025-09-30",
+  "duration" : "2:05:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k43fdJ5ZHkCvPrDWH4e",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k43fdJ5ZHkCvPrDWH4e",
+  "title" : "Round 2 - Iker Pajares v Mohamed Abouelghar",
+  "round" : "ROUND2",
+  "date" : "2025-09-30",
+  "duration" : "1:23:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6AaHZLnq1yRcJDWhCC",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6AaHZLnq1yRcJDWhCC",
+  "title" : "Round 2 - Abhay Singh v Fares Dessouky",
+  "round" : "ROUND2",
+  "date" : "2025-09-29",
+  "duration" : "1:21:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/krIw9Sf48ulBjPDWT5y",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/krIw9Sf48ulBjPDWT5y",
+  "title" : "Round 2 - Abdulla Mohd Al-Tamimi v Sebastien Bonmalais",
+  "round" : "ROUND2",
+  "date" : "2025-09-30",
+  "duration" : "1:18:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kJDI1dv4F2hMnmDWpiY",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kJDI1dv4F2hMnmDWpiY",
+  "title" : "Round 2 - Declan James v Youssef Soliman  ",
+  "round" : "ROUND2",
+  "date" : "2025-09-29",
+  "duration" : "1:13:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1LJvoyBH0aYmYDWKx0",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1LJvoyBH0aYmYDWKx0",
+  "title" : "Round 2 - Dimitri Steinmann v Paul Coll",
+  "round" : "ROUND2",
+  "date" : "2025-09-30",
+  "duration" : "1:10:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k601bDcU4sxzJEDWkGC",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k601bDcU4sxzJEDWkGC",
+  "title" : "Round 2 - Curtis Malik v Youssef Ibrahim",
+  "round" : "ROUND2",
+  "date" : "2025-09-29",
+  "duration" : "0:54:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k4whNjQccR4wEdDWmYA",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k4whNjQccR4wEdDWmYA",
+  "title" : "Round 2 -  Mostafa Asal v Gregoire Marche ",
+  "round" : "ROUND2",
+  "date" : "2025-09-29",
+  "duration" : "0:50:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1xtXT84wZBTCODXesO",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1xtXT84wZBTCODXesO",
+  "title" : "Quarter Final - Fares Dessouky v Youssef Ibrahim",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-10-01",
+  "duration" : "1:11:00",
+  "upset" : true
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k2ocdJNlCpuMA3DXAgY",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k2ocdJNlCpuMA3DXAgY",
+  "title" : "Quarter Final - Mohamed Abouelghar v Paul Coll",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-10-02",
+  "duration" : "1:48:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k1TfZgaROYBaBWDXFzE",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k1TfZgaROYBaBWDXFzE",
+  "title" : "Quarter Final - Jonah Bryant v Abdulla Mohd Al-Tamimi",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-10-02",
+  "duration" : "1:29:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k3u8oB9QKeAVNpDXaVU",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k3u8oB9QKeAVNpDXaVU",
+  "title" : "Quarter Final - Mostafa Asal v Youssef Soliman",
+  "round" : "QUARTER_FINAL",
+  "date" : "2025-10-01",
+  "duration" : "1:07:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k5mE4b9jfxkm5LDXZay",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k5mE4b9jfxkm5LDXZay",
+  "title" : "Semi Final - Jonah Bryant v Paul Coll",
+  "round" : "SEMI_FINAL",
+  "date" : "2025-10-03",
+  "duration" : "1:03:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/kaUZO4AhtKc1W5DXZaA",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/kaUZO4AhtKc1W5DXZaA",
+  "title" : "Semi Final - Mostafa Asal v Fares Dessouky",
+  "round" : "SEMI_FINAL",
+  "date" : "2025-10-03",
+  "duration" : "1:01:00",
+  "upset" : false
+}, {
+  "videoUrl" : "https://www.dailymotion.com/video/k6Sg3hwJyirwOKDYeZA",
+  "thumbnailUrl" : "https://www.dailymotion.com/thumbnail/video/k6Sg3hwJyirwOKDYeZA",
+  "title" : "Final - Mostafa Asal v Paul Coll",
+  "round" : "FINAL",
+  "date" : "2025-10-04",
+  "duration" : "1:52:00",
+  "upset" : false
+} ];
+
+        const ROUND_ORDER = ['ROUND1', 'ROUND2', 'ROUND3', 'QUARTER_FINAL', 'SEMI_FINAL', 'FINAL'];
+        const ROUND_NAMES = {
+            'ROUND1': 'Round 1',
+            'ROUND2': 'Round 2',
+            'ROUND3': 'Round 3',
+            'QUARTER_FINAL': 'Quarter Finals',
+            'SEMI_FINAL': 'Semi Finals',
+            'FINAL': 'Final'
+        };
+
+        function groupByRound(matches) {
+            const groups = {};
+            matches.forEach(m => {
+                if (!groups[m.round]) groups[m.round] = [];
+                groups[m.round].push(m);
+            });
+            Object.values(groups).forEach(arr =>
+                arr.sort((a, b) =>
+                    (b.upset - a.upset) || (parseDuration(b.duration) - parseDuration(a.duration))
+                )
+            );
+            return groups;
+        }
+
+        function parseDuration(str) {
+            const [h, m, s] = str.split(':').map(Number);
+            return h * 3600 + m * 60 + s;
+        }
+
+        function renderCard(match) {
+            const upsetClass = match.upset ? ' upset' : '';
+            const media = match.thumbnailUrl
+                ? `<img class="thumbnail" src="${match.thumbnailUrl}" alt="${match.title}" loading="lazy">`
+                : `<div class="thumbnail no-thumb">Video</div>`;
+            return `
+                <div class="match${upsetClass}">
+                    <a href="${match.videoUrl}" target="_blank" rel="noopener">
+                        <div class="thumb-container">
+                            ${media}
+                            <span class="duration">${match.duration}</span>
+                        </div>
+                        <div class="info">
+                            <div class="title">${match.title}</div>
+                            <div class="meta">${match.date}</div>
+                        </div>
+                    </a>
+                </div>
+            `;
+        }
+
+        function render() {
+            const groups = groupByRound(matches);
+            const content = document.getElementById('content');
+            let firstRoundSeen = false;
+
+            ROUND_ORDER.forEach(round => {
+                const roundMatches = groups[round];
+                if (!roundMatches || roundMatches.length === 0) return;
+
+                const isBlurred = firstRoundSeen;
+                firstRoundSeen = true;
+
+                const section = document.createElement('section');
+                section.className = 'round' + (isBlurred ? ' blurred' : '');
+                section.dataset.round = round;
+                section.innerHTML = `
+                    <h2>${ROUND_NAMES[round] || round}</h2>
+                    <div class="matches">
+                        ${roundMatches.map(renderCard).join('')}
+                    </div>
+                `;
+                content.appendChild(section);
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.remove('blurred');
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
+
+            document.querySelectorAll('.round.blurred').forEach(s => observer.observe(s));
+        }
+
+        render();
+    </script>
+</body>
+</html>
